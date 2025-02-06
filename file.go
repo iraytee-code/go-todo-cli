@@ -12,6 +12,9 @@ var filePath = "./todo.json"
 func CreateFile() error {
 	todo := []Todos{}
 	jsonData, err := json.MarshalIndent(todo, "", "  ")
+	if err != nil {
+		log.Fatal("Cannot marshal json", err)
+	}
 	err = os.WriteFile(
 		filePath, jsonData, 0644,
 	)
@@ -25,6 +28,9 @@ func ReadFile() Todos {
 	CheckFileExists()
 	var allTodo Todos
 	todos, err := os.ReadFile(filePath)
+	if err != nil {
+		log.Fatal("Cannot read file", err)
+	}
 	err = json.Unmarshal(todos, &allTodo)
 	if err != nil {
 		log.Fatal("Cannot retrieve json", err)
